@@ -18,6 +18,9 @@ export default class Fetch extends React.Component{
   fetchData(props){
     fetch(props.url, props.options || {})
     .then(res => {
+      if (typeof this.props.transformResponse === 'function'){
+        return this.props.transformResponse(res, this)
+      }
       return res.json()
     })
     .then(json => {
